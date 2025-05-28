@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Crosshair Generator</title>
+  <style>
+    body {
+      background-color: #111;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+
+    #crosshair {
+      position: relative;
+      margin: 40px auto;
+      width: 200px;
+      height: 200px;
+      background-color: transparent;
+    }
+
+    .line {
+      position: absolute;
+      background-color: white;
+    }
+
+    .vertical {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .horizontal {
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    input, button, select {
+      margin: 6px;
+      padding: 6px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎯 Crosshair Generator</h1>
+
+  <div id="crosshair">
+    <div class="line vertical" id="v-line"></div>
+    <div class="line horizontal" id="h-line"></div>
+  </div>
+
+  <label for="color">Color:</label>
+  <input type="color" id="color" value="#ffffff">
+
+  <label for="size">Size:</label>
+  <input type="range" id="size" min="50" max="300" value="200">
+
+  <label for="thickness">Thickness:</label>
+  <input type="range" id="thickness" min="1" max="20" value="4">
+
+  <br>
+  <button onclick="applySettings()">Apply</button>
+  <button onclick="randomize()">Random Crosshair</button>
+
+  <script>
+    const crosshair = document.getElementById("crosshair");
+    const vLine = document.getElementById("v-line");
+    const hLine = document.getElementById("h-line");
+
+    function applySettings() {
+      const color = document.getElementById("color").value;
+      const size = document.getElementById("size").value;
+      const thickness = document.getElementById("thickness").value;
+
+      crosshair.style.width = `${size}px`;
+      crosshair.style.height = `${size}px`;
+
+      vLine.style.width = `${thickness}px`;
+      vLine.style.height = "100%";
+      vLine.style.backgroundColor = color;
+
+      hLine.style.height = `${thickness}px`;
+      hLine.style.width = "100%";
+      hLine.style.backgroundColor = color;
+    }
+
+    function randomize() {
+      const colors = ["#ff0000", "#00ff00", "#0000ff", "#ffff00", "#00ffff", "#ffffff"];
+      const randomColor = colors[Math.floor(Math.random() * colors.length)];
+      const randomSize = Math.floor(Math.random() * 200) + 100;
+      const randomThickness = Math.floor(Math.random() * 10) + 1;
+
+      document.getElementById("color").value = randomColor;
+      document.getElementById("size").value = randomSize;
+      document.getElementById("thickness").value = randomThickness;
+
+      applySettings();
+    }
+
+    // Apply default settings on load
+    window.onload = applySettings;
+  </script>
+</body>
+</html>
